@@ -1,2 +1,2 @@
 # Steven's Journal
-Record everyday learing of python or C++.
+### Record everyday learing of python or C++.
