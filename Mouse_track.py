@@ -2,6 +2,8 @@ from pynput.mouse import Listener
 import tkinter as tk
 from PIL import Image, ImageDraw
 import time as ti
+from tkinter import messagebox
+import os
 
 # -------------------------声明
 root = tk.Tk()
@@ -54,6 +56,8 @@ def create_GUI():
             global listener
             listener = Listener(on_click=on_click, on_move=on_move)
             listener.start()
+        else:
+            messagebox.showwarning("!", message="正在记录")
 
     def onclick_over():
         global img
@@ -68,11 +72,18 @@ def create_GUI():
             formatted_time = ti.strftime("%Y_%m_%d_%H_%M_%S", local_time)
             print(formatted_time)
             img.save(f"{formatted_time}.png")
+            img.show()
+            messagebox.showinfo("记录结束", message=f"图片保存到{os.path.dirname(__file__)}")
         else:
             print("已经结束")
+            messagebox.showwarning("!", message="记录已经结束")
     global root
     root.title("监视鼠标轨迹")
-    root.geometry("300x400+810+340")
+    global screen_width
+    global screen_height
+    x = int(screen_width/2)
+    y = int(screen_height/2)
+    root.geometry(f"300x400+{x}+{y}")
     button_start = tk.Button(root, text="开始记录", command=onclick_start)
     button_over = tk.Button(root, text="结束记录", command=onclick_over)
     check_moveonly = tk.BooleanVar()
